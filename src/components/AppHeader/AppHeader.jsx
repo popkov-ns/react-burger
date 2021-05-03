@@ -1,6 +1,6 @@
 import React from 'react';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styleAppHeader from './AppHeader.module.css';
+import styleAppHeader from './AppHeader.module.scss';
 
 function AppHeader() {
     return (
@@ -9,10 +9,10 @@ function AppHeader() {
                 <Logo />
             </a>
 
-            <nav className={styleAppHeader.buttonGroup}>
+            <nav className={styleAppHeader.menu}>
                 <ul>
                     <li>
-                        <a href='#2' className={`${styleAppHeader.btn} ${styleAppHeader.active} mr-4`}>
+                        <a href='#2' className={`${styleAppHeader.btn} ${styleAppHeader.active} mr-1`}>
                             <BurgerIcon type="primary" />
                             <span>Конструктор</span>
                         </a>

@@ -1,10 +1,15 @@
 .half {
     margin-top: 100px;
-    text-align: right;
+    padding-left: 100px;
+}
+
+.lock {
+    padding-left: 20px;
 }
 
 .block {
-    height: 60vh;
+    margin: 16px 0;
+    max-height: 45vh;
     overflow-y: auto;
     scrollbar-color: #8585AD;
 }
@@ -20,6 +25,15 @@
   
 .block::-webkit-scrollbar-track {
     background-color: #2F2F37;
+}
+
+.block>div {
+    display: flex;
+    align-items: center;
+}
+
+.block>svg {
+    cursor: gap;
 }
 
 .block>div:not(:last-child) {

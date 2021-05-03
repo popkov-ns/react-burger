@@ -1,20 +1,43 @@
 import React from 'react';
-import styleBurgerIngredients from './BurgerIngredients.module.css';
+import styleBurgerIngredients from './BurgerIngredients.module.scss';
 import { Counter, CurrencyIcon, Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 import data from '../../utils/data.js';
 
 function BurgerIngredients() {
     const [current, setCurrent] = React.useState('buns');
 
-    let bunArray = data.filter(item => item.type === 'bun');
-    let mainArray = data.filter(item => item.type === 'main');
-    let sauceArray = data.filter(item => item.type === 'sauce');
+    const elementPropTypes = PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired
+    })
+
+    const Element = ({ item }) => (
+        <li className={styleBurgerIngredients.element}>
+            <img className={styleBurgerIngredients.img} src={item.image} alt={item.name}/>
+            <p className={styleBurgerIngredients.price}>
+                <span className='text text_type_digits-default mr-1'>{item.price}</span>
+                <CurrencyIcon />
+            </p>
+            <p className={styleBurgerIngredients.name}>{item.name}</p>
+            {item.name === "Краторная булка N-200i" ? <Counter count={1} size="default" /> : null}
+            {item.name === "Флюоресцентная булка R2-D3" ? <Counter count={1} size="default" /> : null}
+            {item.name === "Биокотлета из марсианской Магнолии" ? <Counter count={235} size="small" /> : null}
+            {item.name === "Мясо бессмертных моллюсков Protostomia" ? <Counter count={100} size="small" /> : null}
+        </li>
+    );
+
+    Element.propTypes = {
+        item: elementPropTypes.isRequired
+    }
 
     return (
         <div>
-            <h1 className='mt-5'>Собери бургер</h1>
-            <div className={styleBurgerIngredients.tab} >
+            <h1 className={styleBurgerIngredients.title}>Собери бургер</h1>
+
+            <div className={styleBurgerIngredients.tab}>
                 <Tab value='buns' active={current === 'buns'} onClick={setCurrent}>
                     Булки
                 </Tab>
@@ -25,56 +48,28 @@ function BurgerIngredients() {
                     Начинки
                 </Tab>
             </div>
+
             <div className={styleBurgerIngredients.content}>
-                <h2 id='buns' className='mt-5 mb-3'>Булки</h2>
-                <div className={styleBurgerIngredients.block}>
-                    {bunArray.map(item => {
-                        return (
-                            <div className={styleBurgerIngredients.element}>
-                                <img src={item.image} alt={item.name}/>
-                                <p className={styleBurgerIngredients.price}>
-                                    <span className='text text_type_digits-default mr-1'>{item.price}</span>
-                                    <CurrencyIcon />
-                                </p>
-                                <p>{item.name}</p>
-                                <Counter count={1} size="default" />
-                            </div>
-                        )
+                <h2 id='buns' className={styleBurgerIngredients.subtitle}>Булки</h2>
+                <ul className={styleBurgerIngredients.block}>
+                    {data.filter(item => item.type === 'bun').map(item => {
+                        return <Element item={item} key={item._id}/>
                     })}
-                </div>
+                </ul>
 
-                <h2 id='sauces' className='mt-5 mb-3'>Соусы</h2>
-                <div className={styleBurgerIngredients.block}>
-                    {sauceArray.map(item => {
-                        return (
-                            <div className={styleBurgerIngredients.element}>
-                                <img src={item.image} alt={item.name}/>
-                                <p className={styleBurgerIngredients.price}>
-                                    <span className='text text_type_digits-default mr-1'>{item.price}</span>
-                                    <CurrencyIcon />
-                                </p>
-                                <p>{item.name}</p>
-                                <Counter count={235} size="small" />
-                            </div>
-                        )
+                <h2 id='sauces' className={styleBurgerIngredients.subtitle}>Соусы</h2>
+                <ul className={styleBurgerIngredients.block}>
+                    {data.filter(item => item.type === 'main').map(item => {
+                        return <Element item={item} key={item._id} />
                     })}
-                </div>
+                </ul>
 
-                <h2 id='mains' className='mt-5 mb-3'>Начинки</h2>
-                <div className={styleBurgerIngredients.block}>
-                    {mainArray.map(item => {
-                        return (
-                            <div className={styleBurgerIngredients.element}>
-                                <img src={item.image} alt={item.name}/>
-                                <p className={styleBurgerIngredients.price}>
-                                    <span className='text text_type_digits-default mr-1'>{item.price}</span>
-                                    <CurrencyIcon />
-                                </p>
-                                <p>{item.name}</p>
-                            </div>
-                        )
+                <h2 id='mains' className={styleBurgerIngredients.subtitle}>Начинки</h2>
+                <ul className={styleBurgerIngredients.block}>
+                    {data.filter(item => item.type === 'sauce').map(item => {
+                        return <Element item={item} key={item._id}/>
                     })}
-                </div>
+                </ul>
             </div>
         </div>
     )
