@@ -1,0 +1,48 @@
+.logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.menu ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.btn {
+    
+    display: flex;
+    padding: 16px 20px; 
+    align-items: center;
+    height: 56px;
+    color: #8585AD;
+    background-color: transparent;
+    border-radius: 40px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+
+    &:hover {
+        color: #F2F2F3;
+    }
+
+    &:hover svg {
+        fill: #F2F2F3;
+    }
+}
+
+.btn svg {
+    fill: #8585AD;
+    margin-right: 8px;
+}
+
+.active {
+    color: #F2F2F3;
+    cursor: auto;
+}
+
+.active svg{
+    fill: #F2F2F3;
+}

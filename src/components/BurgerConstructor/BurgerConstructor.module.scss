@@ -1,0 +1,48 @@
+.half {
+    margin-top: 100px;
+    padding-left: 100px;
+}
+
+.lock {
+    padding-left: 20px;
+}
+
+.block {
+    margin: 16px 0;
+    max-height: 45vh;
+    overflow-y: auto;
+    scrollbar-color: #8585AD;
+}
+
+.block::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2F2F37;
+}
+  
+.block::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+  
+.block::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+}
+
+.block>div {
+    display: flex;
+    align-items: center;
+}
+
+.block>svg {
+    cursor: gap;
+}
+
+.block>div:not(:last-child) {
+    margin-bottom: 16px;
+}
+
+.price {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
