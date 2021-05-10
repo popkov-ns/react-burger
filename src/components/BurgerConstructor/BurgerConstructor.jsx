@@ -1,19 +1,27 @@
 import React from 'react';
 import styleBurgerConstructor from'./BurgerConstructor.module.scss';
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import data from '../../utils/data.js';
+
+import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import OrderDetails from '../OrderDetails/OrderDetails';
+
 import PropTypes from 'prop-types';
 
-function BurgerConstructor() {
+function BurgerConstructor(props) {
+
+    const [modalOrderDetailsActive, setModalOrderDetailsActive] = React.useState(false);
 
     const arrayIngredientsNumbers = [1, 2, 7, 8, 5, 3, 6];
     const dataVisible = [];
+    let totalPrice = 0;
 
-    for (let i = 0; i < arrayIngredientsNumbers.length; i++) {
-        dataVisible.push(data[arrayIngredientsNumbers[i]])
-    };
+    if (props.data.length !== 0) {
+        for (let i = 0; i < arrayIngredientsNumbers.length; i++) {
+            dataVisible.push(props.data[arrayIngredientsNumbers[i]])
+        };
 
-    const totalPrice = dataVisible.reduce((acum, item) => acum += item.price, 0);
+        totalPrice = dataVisible.reduce((acum, item) => acum += item.price, 0);
+    }
 
     const Element = ({ data, count, type='center', isLocked=false }) => (
         <ConstructorElement
@@ -35,7 +43,7 @@ function BurgerConstructor() {
     return (
         <div className={styleBurgerConstructor.half}>
             <div className={styleBurgerConstructor.lock}>
-                <Element data={data} count={0} type='top' isLocked={true}/>
+                {props.data[0] && <Element data={props.data} count={0} type='top' isLocked={true}/>}
             </div>
 
             <div className={styleBurgerConstructor.block}>
@@ -50,17 +58,20 @@ function BurgerConstructor() {
             </div>
 
             <div className={styleBurgerConstructor.lock}>
-                <Element data={data} count={data.length - 1} type='bottom' isLocked={true} />
+                {props.data[props.data.length - 1] && <Element data={props.data} count={props.data.length - 1} type='bottom' isLocked={true} />}
             </div>
             
             <div className={styleBurgerConstructor.price}>
                 <div className='mr-5'>
                     <span className='text text_type_main-large mr-1'>{totalPrice}</span><CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large">
+                <Button type="primary" size="large" onClick={() => setModalOrderDetailsActive(true)}>
                     Оформи заказ
                 </Button>
             </div>
+            <ModalOverlay isOpen={modalOrderDetailsActive} setActive={setModalOrderDetailsActive}>
+                <OrderDetails/>
+            </ModalOverlay>
         </div>
     )
 }

@@ -1,12 +1,16 @@
 import React from 'react';
 import styleBurgerIngredients from './BurgerIngredients.module.scss';
 import { Counter, CurrencyIcon, Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
+
 import PropTypes from 'prop-types';
 
-import data from '../../utils/data.js';
-
-function BurgerIngredients() {
+function BurgerIngredients(props) {
     const [current, setCurrent] = React.useState('buns');
+    const [modalIngredientDetailsActive, setModalIngredientDetailsActive] = React.useState(false);
+    const [currentItem, setCurrentItem] = React.useState(null);
 
     const elementPropTypes = PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -14,8 +18,15 @@ function BurgerIngredients() {
         image: PropTypes.string.isRequired
     })
 
+    const Click = (e) => {
+        console.log(e);
+
+        setModalIngredientDetailsActive(true);
+        setCurrentItem(e.target.alt);
+    }
+
     const Element = ({ item }) => (
-        <li className={styleBurgerIngredients.element}>
+        <li className={styleBurgerIngredients.element} onClick={Click} >
             <img className={styleBurgerIngredients.img} src={item.image} alt={item.name}/>
             <p className={styleBurgerIngredients.price}>
                 <span className='text text_type_digits-default mr-1'>{item.price}</span>
@@ -25,6 +36,8 @@ function BurgerIngredients() {
             {item.name === "Краторная булка N-200i" ? <Counter count={1} size="default" /> : null}
             {item.name === "Флюоресцентная булка R2-D3" ? <Counter count={1} size="default" /> : null}
             {item.name === "Биокотлета из марсианской Магнолии" ? <Counter count={235} size="small" /> : null}
+            {item.name === "Соус Spicy-X" ? <Counter count={2} size="default" /> : null}
+            {item.name === "Соус с шипами Антарианского плоскоходца" ? <Counter count={1} size="default" /> : null}
             {item.name === "Мясо бессмертных моллюсков Protostomia" ? <Counter count={100} size="small" /> : null}
         </li>
     );
@@ -52,25 +65,28 @@ function BurgerIngredients() {
             <div className={styleBurgerIngredients.content}>
                 <h2 id='buns' className={styleBurgerIngredients.subtitle}>Булки</h2>
                 <ul className={styleBurgerIngredients.block}>
-                    {data.filter(item => item.type === 'bun').map(item => {
-                        return <Element item={item} key={item._id}/>
+                    {props.data.filter(item => item.type === 'bun').map(item => {
+                        return <Element item={item} key={item._id} />
                     })}
                 </ul>
 
                 <h2 id='sauces' className={styleBurgerIngredients.subtitle}>Соусы</h2>
                 <ul className={styleBurgerIngredients.block}>
-                    {data.filter(item => item.type === 'main').map(item => {
+                    {props.data.filter(item => item.type === 'sauce').map(item => {
                         return <Element item={item} key={item._id} />
                     })}
                 </ul>
 
                 <h2 id='mains' className={styleBurgerIngredients.subtitle}>Начинки</h2>
                 <ul className={styleBurgerIngredients.block}>
-                    {data.filter(item => item.type === 'sauce').map(item => {
+                    {props.data.filter(item => item.type === 'main').map(item => {
                         return <Element item={item} key={item._id}/>
                     })}
                 </ul>
             </div>
+            <ModalOverlay isOpen={modalIngredientDetailsActive} setActive={setModalIngredientDetailsActive}>
+                <IngredientDetails currentItem={currentItem} />
+            </ModalOverlay>
         </div>
     )
 }
