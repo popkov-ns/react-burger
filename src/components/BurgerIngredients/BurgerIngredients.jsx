@@ -18,15 +18,13 @@ function BurgerIngredients(props) {
         image: PropTypes.string.isRequired
     })
 
-    const Click = (e) => {
-        console.log(e);
-
+    const getAttribute = (item) => {
         setModalIngredientDetailsActive(true);
-        setCurrentItem(e.target.alt);
+        setCurrentItem(item);
     }
 
     const Element = ({ item }) => (
-        <li className={styleBurgerIngredients.element} onClick={Click} >
+        <li className={styleBurgerIngredients.element} onClick={() => getAttribute(item)}>
             <img className={styleBurgerIngredients.img} src={item.image} alt={item.name}/>
             <p className={styleBurgerIngredients.price}>
                 <span className='text text_type_digits-default mr-1'>{item.price}</span>

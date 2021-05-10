@@ -15,7 +15,10 @@ function App() {
 
   React.useEffect(() => {
     fetch(url)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {throw new Error ('Ошибка!')}
+        return res.json()
+      })
       .then(
         (data) => {
           setIsLoaded(true);
