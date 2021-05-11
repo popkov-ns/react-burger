@@ -9,16 +9,16 @@ const modalRoot = document.getElementById('react-modals');
 const ModalOverlay = ({ isOpen, setActive, children }) => {
 
     React.useEffect(() => {
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && isOpen === true) {
-                setActive(false);
-            }
-        })
+        window.addEventListener('keydown', closeModalEsc)
 
-        return () => {
-            window.removeEventListener('keydown', () => {});
-        }
+        return () => window.removeEventListener('keydown', closeModalEsc);
     })
+
+    const closeModalEsc = (e) => {
+        if (e.key === 'Escape' && isOpen === true) {
+            setActive(false);
+        }
+    }
 
     return ReactDOM.createPortal (
         <>

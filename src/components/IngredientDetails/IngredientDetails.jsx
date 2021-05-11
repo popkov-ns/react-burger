@@ -2,7 +2,6 @@ import React from 'react';
 import styleIngredientDetails from './IngredientDetails.module.scss';
 
 function IngredientDetails({currentItem}) {
-    console.log(currentItem);
 
     return (
         <div className={styleIngredientDetails.wrapp}>
