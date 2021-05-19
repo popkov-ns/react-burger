@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import styleBurgerIngredients from './BurgerIngredients.module.scss';
 import { Counter, CurrencyIcon, Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
+import {IngredientsContext} from '../../context/ingredients';
+
 import PropTypes from 'prop-types';
 
-function BurgerIngredients(props) {
-    const [current, setCurrent] = React.useState('buns');
-    const [modalIngredientDetailsActive, setModalIngredientDetailsActive] = React.useState(false);
-    const [currentItem, setCurrentItem] = React.useState(null);
+function BurgerIngredients() {
+    const [current, setCurrent] = useState('buns');
+    const [modalIngredientDetailsActive, setModalIngredientDetailsActive] = useState(false);
+    const [currentItem, setCurrentItem] = useState(null);
+
+    const data = useContext(IngredientsContext);
 
     const elementPropTypes = PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -63,21 +67,21 @@ function BurgerIngredients(props) {
             <div className={styleBurgerIngredients.content}>
                 <h2 id='buns' className={styleBurgerIngredients.subtitle}>Булки</h2>
                 <ul className={styleBurgerIngredients.block}>
-                    {props.data.filter(item => item.type === 'bun').map(item => {
+                    {data.filter(item => item.type === 'bun').map(item => {
                         return <Element item={item} key={item._id} />
                     })}
                 </ul>
 
                 <h2 id='sauces' className={styleBurgerIngredients.subtitle}>Соусы</h2>
                 <ul className={styleBurgerIngredients.block}>
-                    {props.data.filter(item => item.type === 'sauce').map(item => {
+                    {data.filter(item => item.type === 'sauce').map(item => {
                         return <Element item={item} key={item._id} />
                     })}
                 </ul>
 
                 <h2 id='mains' className={styleBurgerIngredients.subtitle}>Начинки</h2>
                 <ul className={styleBurgerIngredients.block}>
-                    {props.data.filter(item => item.type === 'main').map(item => {
+                    {data.filter(item => item.type === 'main').map(item => {
                         return <Element item={item} key={item._id}/>
                     })}
                 </ul>

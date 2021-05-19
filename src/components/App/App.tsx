@@ -5,6 +5,8 @@ import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 
+import {IngredientsContext} from '../../context/ingredients';
+
 function App() {
 
   const url = 'https://norma.nomoreparties.space/api/ingredients';
@@ -21,6 +23,7 @@ function App() {
       })
       .then(
         (data) => {
+          console.log(data);
           setIsLoaded(true);
           setData(data.data);
         },
@@ -39,17 +42,19 @@ function App() {
   } else {
     return (
       <>
-        <header className={styleApp.header}>
-          <div className={styleApp.containerHeader}>
-            <AppHeader />
-          </div>
-        </header>
-        
-        <section className={styleApp.main}>
-          <div className={styleApp.container}>
-            {!isLoaded ? <div className={styleApp.loaded}>Загрузка...</div> : <> <BurgerIngredients data={data} /> <BurgerConstructor data={data} /> </>}
-          </div>
-        </section>
+        <IngredientsContext.Provider value={data}>
+          <header className={styleApp.header}>
+            <div className={styleApp.containerHeader}>
+              <AppHeader />
+            </div>
+          </header>
+          
+          <section className={styleApp.main}>
+            <div className={styleApp.container}>
+              {!isLoaded ? <div className={styleApp.loaded}>Загрузка...</div> : <> <BurgerIngredients /> <BurgerConstructor /> </>}
+            </div>
+          </section>
+        </IngredientsContext.Provider>
       </>
     );
   }
