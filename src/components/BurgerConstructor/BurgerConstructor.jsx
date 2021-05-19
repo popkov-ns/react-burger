@@ -13,7 +13,7 @@ function BurgerConstructor() {
 
     const [modalOrderDetailsActive, setModalOrderDetailsActive] = useState(false);
 
-    const data = useContext(IngredientsContext);
+    const data = useContext(IngredientsContext); //
 
     const arrayIngredientsNumbers = [1, 3, 6, 8, 5, 3, 6];
     const dataVisible = [];
@@ -44,21 +44,21 @@ function BurgerConstructor() {
         type: PropTypes.string
     }
 
-    const PlaceOrder = () => {
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: { 
-                "ingredients": JSON.stringify(dataVisible.map(item => item._id))
-            }
-        };
-        fetch('https://norma.nomoreparties.space/api/orders', requestOptions)
-            .then(response => response.json())
-            .then(data => console.log(data));
+    const PlaceOrder = () => { // Не работает Post запрос
+        const requestOptions = { //
+            method: 'POST', //
+            headers: { //
+                'Content-Type': 'application/json; charset=utf-8' //
+            }, //
+            body: { //
+                "ingredients": JSON.stringify(dataVisible.map(item => item._id)) // ?
+            } //
+        }; //
+        fetch('https://norma.nomoreparties.space/api/orders', requestOptions) //
+            .then(response => response.json()) // 
+            .then(data => console.log(data)); //
 
-        setModalOrderDetailsActive(true);
+        setModalOrderDetailsActive(true); 
     }
 
     return (
