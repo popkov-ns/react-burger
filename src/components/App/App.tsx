@@ -23,7 +23,6 @@ function App() {
       })
       .then(
         (data) => {
-          console.log(data);
           setIsLoaded(true);
           setData(data.data);
         },
